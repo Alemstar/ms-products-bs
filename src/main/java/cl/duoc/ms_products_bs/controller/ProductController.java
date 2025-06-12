@@ -1,5 +1,7 @@
 package cl.duoc.ms_products_bs.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +19,45 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ProductController {
 
     @Autowired
-    cl.duoc.ms_products_bs.service.ProductService ProductService;
+    ProductService productService;
+    
+    @GetMapping()
+    public ResponseEntity<List<ProductDTO>> selectAllProduct(){
+        ResponseEntity<List<ProductDTO>> listProductDTO = productService.selectAllProduct();
+        return listaProductDTO;
+    }
 
-    @GetMapping("{/id}")
-    public ResponseEntity<ProductDTO> findProductById(@PathVariable("idProduct") Long idProduct) {
-        ProductDTO productDTO = ProductService.getProductById(idProduct);
-
-        return (productDTO != null)? new ResponseEntity<>(productDTO, HttpStatus.OK) :
-                                     new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/GetProductById/{idProduct}")
+    public ResponseIdentity<?> getProductById(@PathVariable("idProduct") Long idProduct){
+        return productService.getProductById(idProduct);
     }
     
+    @PostMapping()
+    public ResponseEntity<String> insertProduct(@RequestBody ProductDTO productDTO){
+        try{
+        return productService.insertProduct(productDTO);}
+        catch(FeignClientException feignClientException){
+            return ResponseEntity.status(feignClientException.status()).body(feignClientException.contentUTF8());
+        }
+    }
+
+    @DeleteMapping("/DeleteProductById/{idProduct}")
+    public ResponseEntity<String> deleteProduct(@PathVariable("idProduct") Long idProduct){
+        try{
+        return productService.deleteProduct(idProduct);}
+        catch(FeignClientException feignClientException){
+            return ResponseEntity.status(feignClientException.status()).body(feignClientException.contentUTF8());
+        }
+    }
+
+    @PutMapping("/UpdateProduct")
+    public ResponseEntity<String> updateProduct(@RequestBody ProductDTO productDTO){
+        try{
+        return productService.updateProduct(productDTO);}
+        catch(FeignClientException feignClientException){
+            return ResponseEntity.status(feignClientException.status()).body(feignClientException.contentUTF8());
+        }
+    }
 }
 
 
