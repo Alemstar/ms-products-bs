@@ -1,4 +1,4 @@
-package cl.duoc.ms_products_bs.model;
+package cl.duoc.ms_products_bs.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
