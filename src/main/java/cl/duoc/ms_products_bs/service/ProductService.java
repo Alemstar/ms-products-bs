@@ -21,7 +21,7 @@ public class ProductService {
             ResponseEntity<ProductDTO> answer = productDbFeingClient.getProductById(idProduct);
 
             if (answer.getBody()==null){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This customer does not exist");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This product does not exist");
             }
 
             else {

@@ -3,14 +3,20 @@ package cl.duoc.ms_products_bs.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.duoc.ms_products_bs.model.ProductDTO;
+import cl.duoc.ms_products_bs.model.dto.ProductDTO;
+import cl.duoc.ms_products_bs.service.ProductService;
+import feign.FeignException.FeignClientException;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -24,15 +30,15 @@ public class ProductController {
     @GetMapping()
     public ResponseEntity<List<ProductDTO>> selectAllProduct(){
         ResponseEntity<List<ProductDTO>> listProductDTO = productService.selectAllProduct();
-        return listaProductDTO;
+        return listProductDTO;
     }
 
     @GetMapping("/GetProductById/{idProduct}")
-    public ResponseIdentity<?> getProductById(@PathVariable("idProduct") Long idProduct){
+    public ResponseEntity<?> getProductById(@PathVariable("idProduct") Long idProduct){
         return productService.getProductById(idProduct);
     }
     
-    @PostMapping()
+    @PostMapping("/insertProduct")
     public ResponseEntity<String> insertProduct(@RequestBody ProductDTO productDTO){
         try{
         return productService.insertProduct(productDTO);}
