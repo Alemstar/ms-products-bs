@@ -21,7 +21,7 @@ public interface ProductDbFeingClient {
     public ResponseEntity<List<ProductDTO>> selectAllProduct();
 
     @GetMapping("/{idProduct}")
-    public ResponseEntity<ProductDTO> findProductById(@PathVariable(name = "idProduct") Long idProduct);
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable(name = "idProduct") Long idProduct);
 
     @PostMapping()
     public ResponseEntity<String> insertProduct(@RequestBody ProductDTO productDTO);
